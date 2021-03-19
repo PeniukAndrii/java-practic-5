@@ -1,6 +1,7 @@
 package com.example.demo.service.implementation;
 
 import com.example.demo.dao.UserDAO;
+import com.example.demo.models.Profile;
 import com.example.demo.models.User;
 import com.example.demo.service.UserService;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ public class UserServiceImplementationOne implements UserService{
     private UserDAO userDAO;
 
     @Override
-    public void setUser(MultipartFile img){
+    public void setImg(MultipartFile img){
         try {
             img.transferTo(new File(System.getProperty("user.home") + File.separator + "picture" + File.separator + img.getOriginalFilename()));
         } catch (IOException e) {
@@ -28,11 +29,11 @@ public class UserServiceImplementationOne implements UserService{
     }
 
     @Override
-    public void save(User user){
-        userDAO.save(user);
+    public void save(Profile profile){
+        userDAO.save(profile);
     }
 
-    public List<User> findAll(){
+    public List<Profile> findAll(){
         return userDAO.findAll();
     }
 }

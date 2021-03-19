@@ -3,10 +3,7 @@ package com.example.demo.models;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @AllArgsConstructor
@@ -14,24 +11,26 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
+@ToString(exclude = "profile")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String firstName;
-    private String lastName;
-    private int age;
     private String mail;
     private String pass;
-    private String img;
 
-    public User(String firstName, String lastName, int age, String mail, String pass, String img) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "user")
+
+    private Profile profile;
+
+    public User(String mail, String pass) {
         this.mail = mail;
         this.pass = pass;
-        this.img = img;
+    }
+
+    public User(String mail, String pass, Profile profile) {
+        this.mail = mail;
+        this.pass = pass;
+        this.profile = profile;
     }
 }

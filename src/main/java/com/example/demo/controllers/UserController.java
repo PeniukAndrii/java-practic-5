@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.dao.UserDAO;
+import com.example.demo.models.Profile;
 import com.example.demo.models.User;
 import com.example.demo.service.UserService;
 import lombok.AllArgsConstructor;
@@ -32,19 +33,18 @@ public class UserController {
                          @RequestParam String mail,
                          @RequestParam String pass,
                          @RequestParam MultipartFile img){
-        User user = new User();
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setAge(age);
-        user.setMail(mail);
-        user.setPass(pass);
-        user.setImg(img.getOriginalFilename());
-        userService.setUser(img);
-        userService.save(user);
+        Profile profile = new Profile();
+        profile.setFirstName(firstName);
+        profile.setLastName(lastName);
+        profile.setAge(age);
+        profile.setUser(new User(mail,pass));
+        profile.setImg(img.getOriginalFilename());
+        userService.setImg(img);
+        userService.save(profile);
     }
 
     @GetMapping("/users")
-    private List<User> findUser(){
+    private List<Profile> findUser(){
         return userService.findAll();
     }
 
